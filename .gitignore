@@ -1,0 +1,21 @@
+# Environnement virtuel
+venv2526/
+venv/
+.env
+
+# Credentials et tokens sensibles
+credentials.json
+token.json
+token_sheets.json
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Config éditeur
+.vscode/
+.idea/
+*.code-workspace
+
+exo.pdf
+notescours.txt
