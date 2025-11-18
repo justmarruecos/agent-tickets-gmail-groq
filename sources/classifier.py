@@ -4,10 +4,6 @@ from groq import Groq
 from .config import GROQ_API_KEY, check_config
 import unicodedata
 
-# -----------------------------
-# Constantes de classification
-# (valeurs "propres" qu'on veut utiliser dans le projet)
-# -----------------------------
 
 CATEGORIES = [
     "Problème technique informatique",
@@ -26,9 +22,7 @@ URGENCES = [
 ]
 
 
-# -----------------------------
 # Fonctions utilitaires
-# -----------------------------
 
 def normalize_label(text: str) -> str:
     """
@@ -67,9 +61,7 @@ NORMALIZED_CATEGORIES = {normalize_label(c): c for c in CATEGORIES}
 NORMALIZED_URGENCES = {normalize_label(u): u for u in URGENCES}
 
 
-# -----------------------------
 # Initialisation du client Groq
-# -----------------------------
 
 def get_groq_client() -> Groq:
     """
@@ -79,9 +71,7 @@ def get_groq_client() -> Groq:
     return Groq(api_key=GROQ_API_KEY)
 
 
-# -----------------------------
 # Construction du prompt
-# -----------------------------
 
 def build_prompt(subject: str, body: str) -> str:
     """
@@ -111,10 +101,7 @@ Example:
 }}
 """
 
-
-# -----------------------------
 # Fonction principale de classification
-# -----------------------------
 
 def classify_email(
     subject: str,
@@ -157,9 +144,9 @@ def classify_email(
             "Vérifie la clé API ou réessaie plus tard."
         )
 
-    # -----------------------------
+
     # Parsing JSON renvoyé par le modèle
-    # -----------------------------
+
     import json
 
     try:

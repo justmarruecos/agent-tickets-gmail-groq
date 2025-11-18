@@ -6,15 +6,20 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
 
-# -----------------------------
+
 # Configuration Google Sheets
-# -----------------------------
 
 # Scope : accès en lecture/écriture au Google Sheets
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-# 👉 Mets ici l'ID de TON spreadsheet
-SPREADSHEET_ID = "18M57InpkcWntNsk9S2laEnEpsHJ0hHFSYoyrRjltfBo"
+# l'ID de .env du Google Sheet où écrire les tickets
+SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
+
+if not SPREADSHEET_ID:
+    raise RuntimeError(
+        "SPREADSHEET_ID est introuvable dans l'environnement.\n"
+        "Ajoute SPREADSHEET_ID=... dans ton fichier .env."
+    )
 
 # Mapping entre catégorie et nom de l'onglet (sheet) dans le Google Sheet
 CATEGORY_TO_SHEET = {
@@ -70,23 +75,6 @@ def write_ticket_to_sheet(
     email: Dict[str, Any],
     classification: Dict[str, str],
 ):
-    """
-    Écrit un ticket dans l'onglet correspondant à sa catégorie.
-
-    :param email: dict contenant au moins :
-                  - "id": id Gmail
-                  - "subject": sujet du mail
-    :param classification: dict contenant :
-                  - "categorie"
-                  - "urgence"
-                  - "resume"
-    """
-
-    if SPREADSHEET_ID == "A_REMPLACER_PAR_TON_SPREADSHEET_ID":
-        raise RuntimeError(
-            "Tu dois d'abord mettre l'ID de ton Google Sheet dans SPREADSHEET_ID "
-            "dans le fichier sheets_writer.py"
-        )
 
     categorie = classification["categorie"]
     urgence = classification["urgence"]

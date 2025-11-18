@@ -6,8 +6,8 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
 
-# Scopes = ce que ton app a le droit de faire.
-# Ici : lecture seule de Gmail (suffisant pour le classifieur).
+# Scopes = ce que l'app a le droit de faire.
+# Ici : lecture seule de Gmail 
 SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
 
 
@@ -21,11 +21,11 @@ def _get_gmail_service():
 
     creds: Credentials | None = None
 
-    # 1. Si on a déjà un token enregistré, on le recharge
+    # Si on a déjà un token enregistré, on le recharge
     if os.path.exists("token.json"):
         creds = Credentials.from_authorized_user_file("token.json", SCOPES)
 
-    # 2. Si pas de creds ou creds invalides, on lance le flux OAuth
+    # Si pas de creds ou creds invalides, on lance le flux OAuth
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             # Le token a expiré mais on peut le rafraîchir
@@ -43,11 +43,11 @@ def _get_gmail_service():
             )
             creds = flow.run_local_server(port=0)
 
-        # 3. On sauvegarde les credentials pour les prochaines fois
+        # On sauvegarde les credentials pour les prochaines fois
         with open("token.json", "w") as token:
             token.write(creds.to_json())
 
-    # 4. On construit le service Gmail
+    # On construit le service Gmail
     service = build("gmail", "v1", credentials=creds)
     return service
 

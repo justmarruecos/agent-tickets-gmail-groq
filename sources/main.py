@@ -6,8 +6,8 @@ from .sheets_writer import write_ticket_to_sheet
 
 
 def main():
-    # On passe à 549 pour traiter tous les mails
-    NB_EMAILS = None # 549
+
+    NB_EMAILS = None # tout sinon mettre un chiffre max selon ce que je veux
 
     print("=== Récupération des emails dans la boîte de tickets ===")
     emails = fetch_emails(limit=NB_EMAILS)
